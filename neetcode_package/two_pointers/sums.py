@@ -1,7 +1,4 @@
 
-from operator import indexOf
-
-
 def twoSums_simple(nums,target):
 
     # use enumerate to iterate through a list
