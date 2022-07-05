@@ -5,8 +5,7 @@ twine
 wheel>=0.29
 
 # data science
-numpy
-pandas
+heapq
 
 
 # tests/linter
