@@ -1,6 +1,9 @@
 
 
 # subset
+from turtle import back
+
+
 class Solution(object):
     '''
     nums is a list
@@ -94,3 +97,67 @@ class Solution:
         return False
 
     # O(n * m * 4^n)
+
+class Solution:
+    def combinationSum(self, candidates, target):
+        '''
+        Input: candidates = [2,3,6,7], target = 7
+        Output: [[2,2,3],[7]]
+        7 = 2+2+3
+        '''
+        res =[]
+
+        def dfs(i,curr,total):
+            if total == target:
+                res.append(curr.copy())
+                return
+
+            if i >= len(candidates) or total > target:
+                return
+
+            # two different decisions
+            curr.append(candidates[i])
+            dfs(i, curr,total+candidates[i])
+
+            curr.pop()
+            dfs(i+1,curr,total)
+
+        # start with 0
+        dfs(0,[],0)
+
+        return res
+
+class Solution:
+    def combinationSum2(self, candidates, target):
+        '''
+        Input: candidates = [2,5,2,1,2], target = 5
+        Output:
+        [
+        [1,2,2],
+        [5]
+        ]
+        '''
+        candidates.sort()
+
+        res = []
+
+        def backtrack(curr,position,target):
+            if target == 0:
+                res.append(curr.copy())
+            if target <= 0:
+                return
+
+            his = -1
+            for i in range(position,len(candidates)):
+                if candidates[i] == his:
+                    continue
+
+                curr.append(candidates[i])
+                backtrack(curr,i+1,target-candidates[i])
+
+                curr.pop()
+                his = candidates[i]
+
+        backtrack([],0,target)
+
+        return res
