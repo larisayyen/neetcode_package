@@ -1,5 +1,28 @@
 
+from collections import deque
+
+
 class TreeNode:
+    '''
+    TreeNode{val: 4,
+             left: TreeNode{val: 2,
+                            left: TreeNode{val: 1,
+                                           left: None,
+                                           right: None},
+                            right: TreeNode{val: 3,
+                                            left: None,
+                                            right: None}
+                            },
+             right: TreeNode{val: 7,
+                             left: TreeNode{val: 6,
+                                            left: None,
+                                            right: None},
+                             right: TreeNode{val: 9,
+                                             left: None,
+                                             right: None}
+                            }
+            }
+    '''
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
@@ -16,33 +39,58 @@ class Solution:
         return None
 
     def maxDepth(self,root):
-        # if root:
-        #     return 1+ max(self.maxDepth(root.left),self.maxDepth(root.right))
-        # return None
-        stack = [[root, 1]]
-        res = 0
+        # 1- recursive way
+        if not root:
+            return 0
 
-        while stack:
-            node, depth = stack.pop()
+        return 1 + max(self.maxDepth(root.left),self.maxDepth(root.right))
 
-            if node:
-                res = max(res, depth)
-                stack.append([node.left, depth + 1])
-                stack.append([node.right, depth + 1])
-        return res
+        # 2- bfs way
+
+        # if not root:
+        #     return 0
+
+        # level = 0
+        # q = deque([root])
+        # while q:
+        #     for i in range(len(q)):
+        #         node = q.popleft()
+        #         if node.left:
+        #             q.append(node.left)
+        #         if node.right:
+        #             q.append(node.right)
+        #     level += 1
+        #     return level
+
+        # 3- iterative dfs way
+
+        # stack = [[root,1]] # depth is 1 at first
+        # res = 0
+        # while stack:
+        #     node,depth = stack.pop()
+
+        #     if node:
+        #         res = max(res,depth)
+        #         stack.extend([node.left,depth+1])
+        #         stack.extend([node.right,depth+1])
+        # return res
 
     def diameterOfBinaryTree(self, root):
+        '''
+        the longest distance between any two nodes
+        solution : find the lowest
+        '''
         res = [0]
 
         def dfs(root):
             if root:
-                left = dfs(root.left)
-                right = dfs(root.right)
-                res[0] = max(res[0],2+left+right)
+                left = dfs(root.left) # height for left
+                right = dfs(root.right) # height for right
 
-                return 1+max(left,right)
+                res[0] = max(res[0], 2+left+right) # update result
+                return 1 + max(left,right)
 
-            return -1
+            return -1 # height for a null tree
 
         dfs(root)
         return res[0]
