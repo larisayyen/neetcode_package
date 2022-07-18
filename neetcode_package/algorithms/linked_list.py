@@ -97,7 +97,40 @@ class LinkedList:
             new.next_node = next_node
 
     def remove(self,key):
-        pass
+        '''
+        removes node containing data that matches the key
+        return the node or None if key doesn't exist
+        takes O(n) time
+        '''
+        current = self.head
+        previous = None
+        found = False
+
+        while current and not found:
+            if current.data == key and current is self.head:
+                found = True
+                self.head = current.next_node
+            elif current.data == key:
+                found = True
+                previous.next_node = current.next_node
+            else:
+                previous = current
+                current = current.next_node
+
+        return current
+
+    def node_at_index(self,index):
+        if index == 0:
+            return self.head
+        else:
+            current = self.head
+            position = 0
+
+            while position < index:
+                current = current.next_node
+                position += 1
+
+            return current
 
     def __repr__(self):
         """
@@ -111,7 +144,7 @@ class LinkedList:
         while current:
             if current is self.head:
                 nodes.append("[Head: %s]" % current.data)
-            elif current.next is None:
+            elif current.next_node is None:
                 nodes.append("[Tail: %s]" % current.data)
             else:
                 nodes.append("[%s]" % current.data)
