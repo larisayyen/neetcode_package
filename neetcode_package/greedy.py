@@ -1,4 +1,5 @@
 
+from re import L
 from tkinter import N
 
 
@@ -19,4 +20,14 @@ def maxSubArray(nums):
     return res
 
 def canJump(nums):
-    pass
+    '''
+    start from nums[0],the value is the max jump steps to go
+    determine whether we can reach the last value
+    '''
+    goal = len(nums) - 1
+
+    for i in range(len(nums) - 1,-1,-1):
+        if i + nums[i] >= goal:
+            goal = i
+
+    return True if goal == 0 else False
