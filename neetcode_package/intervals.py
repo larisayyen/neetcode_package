@@ -45,3 +45,40 @@ def merge(intervals):
             output.append([start,end])
 
     return output
+
+def canAttendMeetings(intervals):
+    '''
+    intervals: an array of meeting times [[s1,e1],[s2,e2]...]
+    return True if a person could attend all meetings
+    '''
+    intervals.sort(key = lambda i: i.start)
+
+    for i in range(1,len(intervals)):
+        i1 = intervals[i-1]
+        i2 = intervals[i]
+
+        if i1.end > i2.start:
+            return False
+
+    return True
+
+def MeetingRooms(intervals):
+    '''
+    find the minimum number of conference rooms required
+    '''
+    start = sorted([ i.start for i in intervals])
+    end = sorted([ i.end for i in intervals])
+
+    res,count = 0,0
+    s,e = 0,0
+    while s < len(intervals):
+        if start[s] < end[e]:
+            s += 1
+            count += 1
+        else:
+            e += 1
+            count -=1
+
+        res = max(res,count)
+
+    return res
