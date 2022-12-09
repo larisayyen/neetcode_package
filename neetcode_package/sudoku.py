@@ -1,5 +1,9 @@
 
+import collections
+
 # sudoku validator
+
+## solution_1
 
 valid_set = list(range(1,10))
 
@@ -47,6 +51,37 @@ def sudoku_validator(grid):
         return True
 
     return valid_rows(grid) and valid_columns(grid) and valid_boxes(grid)
+
+
+## solution_2
+
+def isValidSudoku(board):
+
+    cols = collections.defaultdict(set)
+    rows = collections.defaultdict(set)
+    squares = collections.defaultdict(set)
+
+    for r in range(9):
+        for c in range(9):
+
+            ### check if it is "."
+            if board[r][c] == ".":
+                continue
+            ### check if it is in the dict, if yes then has repetition
+            if (
+                board[r][c] in rows[r]
+                or board[r][c] in cols[c]
+                or board[r][c] in squares[(r//3,c//3)]
+            ):
+                return False
+
+            ### add to dict if it is not checked
+            cols[c].add(board[r][c])
+            rows[r].add(board[r][c])
+            squares[(r//3,c//3)].add(board[r][c])
+
+    return True
+
 
 
 # sudoku solver
