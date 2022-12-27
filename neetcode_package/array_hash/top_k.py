@@ -5,7 +5,7 @@ from collections import Counter
 
 def topKfrequent_s1(nums,k):
     '''
-    find the top k elements in the nums list
+    find the top k frequent elements in the nums list
     '''
     topK_dict = {}
 
